@@ -8,6 +8,8 @@ const express = require('express');
 
 const app = express();
 
+app.get('/', (req, res) => res.send('Ответ на сигнал из далёкого космоса'));
+
 app.listen(PORT, () => {
   console.log('server is up and running');
 });
