@@ -12,6 +12,7 @@ const mongoose = require('mongoose');
 
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
+const cors = require('cors');
 const authRouter = require('./routes/auth');
 const usersRouter = require('./routes/users');
 const moviesRouter = require('./routes/movies');
@@ -24,8 +25,7 @@ const app = express();
 
 mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 
-if (CORS_ORIGIN) {
-  const cors = require('cors');
+if (NODE_ENV === 'production' && CORS_ORIGIN) {
   const whitelist = CORS_ORIGIN.split(' ');
   const corsOptions = {
     origin(origin, callback) {
