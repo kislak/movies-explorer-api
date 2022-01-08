@@ -15,5 +15,4 @@ router.patch('/me', celebrate({
   }),
 }), patchUser);
 
-
 module.exports = router;

@@ -1,6 +1,8 @@
 const User = require('../models/user');
+
 const STATUS_OK = 200;
 const { NotFoundError } = require('../errors/not_found');
+
 const sendUser = (res, user) => {
   if (user) {
     return res.status(STATUS_OK).send(user);
@@ -31,5 +33,5 @@ const patchUser = (req, res, next) => {
 
 module.exports = {
   getUser,
-  patchUser
+  patchUser,
 };
