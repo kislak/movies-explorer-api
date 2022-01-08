@@ -5,7 +5,7 @@ const {
   createUser,
   login,
   signout,
-} = require('../controllers/users');
+} = require('../controllers/auth');
 
 router.post('/signup', celebrate({
   body: Joi.object().keys({

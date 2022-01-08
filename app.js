@@ -8,28 +8,29 @@ const {
 const express = require('express');
 const mongoose = require('mongoose');
 
-
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const authRouter = require('./routes/auth');
+const usersRouter = require('./routes/users');
+const moviesRouter = require('./routes/movies');
+
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error_handler');
-
 
 const app = express();
 
 mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 
-
 app.use(express.json());
 app.use(cookieParser());
-
 
 app.get('/', (req, res) => res.send('Ответ на сигнал из далёкого космоса'));
 app.use('/', authRouter);
 app.use(auth);
-app.post('/secret', (req, res) => res.send('welcome to the club!'));
+app.use('/users', usersRouter);
+app.use('/movies', moviesRouter);
 
+app.get('/secret', (req, res) => res.send('welcome to the club!'));
 
 app.use(errors());
 app.use(errorHandler);

@@ -1,54 +1,35 @@
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-
 const STATUS_OK = 200;
-const { JWT_SECRET = 'some-secret-key' } = process.env;
+const { NotFoundError } = require('../errors/not_found');
+const sendUser = (res, user) => {
+  if (user) {
+    return res.status(STATUS_OK).send(user);
+  }
 
-const { UnauthorizedError } = require('../errors/unauthorized');
-const { ConflictError } = require('../errors/conflict');
+  throw new NotFoundError('Запрашиваемая каточка не найдена');
+};
 
-const createUser = (req, res, next) => {
+const getUser = (req, res, next) => {
+  const id = req.user._id;
+
+  return User.findById(id)
+    .then((user) => sendUser(res, user))
+    .catch(next);
+};
+
+const patchUser = (req, res, next) => {
+  const id = req.user._id;
   const {
     name,
     email,
-    password,
   } = req.body;
 
-  bcrypt.hash(password, 10)
-    .then((encryptedPassword) => User.create({
-      name,
-      email,
-      password: encryptedPassword,
-    }))
-    .then(() => res.status(STATUS_OK).send({ message: 'Пользователь успешно зарегистрирован!' }))
-    .catch((err) => {
-      if (err.code === 11000) {
-        return next(new ConflictError(err.message));
-      }
-      return next(err);
-    });
-};
-
-const login = (req, res, next) => {
-  const { email, password } = req.body;
-  return User.findUserByCredentials(email, password)
-    .then((user) => {
-      const token = jwt.sign({ _id: user._id }, JWT_SECRET);
-      res.cookie('jwt', token, { maxAge: 3600000 * 24 * 7, httpOnly: true })
-        .send({ message: 'Аутентификация прошла успешно!' });
-    })
-    .catch((err) => {
-      next(new UnauthorizedError(err.message));
-    });
-};
-
-const signout = (req, res, next) => {
-  res.cookie('jwt', '', { maxAge: 3600000 * 24 * 7, httpOnly: true }).send({ message: 'аревуар!' });
+  return User.findByIdAndUpdate(id, { name, email }, { new: true, runValidators: true })
+    .then((user) => sendUser(res, user))
+    .catch(next);
 };
 
 module.exports = {
-  createUser,
-  login,
-  signout
+  getUser,
+  patchUser
 };
