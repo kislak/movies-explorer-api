@@ -1,10 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
-
-const STATUS_OK = 200;
 const { JWT_SECRET = 'some-secret-key' } = process.env;
-
 const { UnauthorizedError } = require('../errors/unauthorized');
 const { ConflictError } = require('../errors/conflict');
 
@@ -21,7 +18,7 @@ const createUser = (req, res, next) => {
       email,
       password: encryptedPassword,
     }))
-    .then(() => res.status(STATUS_OK).send({ message: 'Пользователь успешно зарегистрирован!' }))
+    .then(() => res.send({ message: 'Пользователь успешно зарегистрирован!' }))
     .catch((err) => {
       if (err.code === 11000) {
         return next(new ConflictError('Такой пользователь уже существует'));

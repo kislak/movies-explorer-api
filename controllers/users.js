@@ -1,13 +1,12 @@
 const User = require('../models/user');
 
-const STATUS_OK = 200;
 const { NotFoundError } = require('../errors/not_found');
 const { ConflictError } = require('../errors/conflict');
 const { BadRequest } = require('../errors/bad_request');
 
 const sendUser = (res, user) => {
   if (user) {
-    return res.status(STATUS_OK).send(user);
+    return res.send(user);
   }
   throw new NotFoundError('Запрашиваемая каточка не найдена');
 };
