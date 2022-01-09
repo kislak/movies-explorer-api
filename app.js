@@ -48,14 +48,17 @@ app.use(requestLogger);
 app.get('/', (req, res) => res.send('Ответ на сигнал из далёкого космоса'));
 app.use('/', authRouter);
 app.use(auth);
-app.use('/users', usersRouter);
-app.use('/movies', moviesRouter);
-
+app.use('/', usersRouter);
+app.use('/', moviesRouter);
 app.get('/secret', (req, res) => res.send('welcome to the club!'));
 
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
+
+app.use(function(req, res){
+  res.status(404).send({ message: 'запрошенный ресурс не найден'})
+});
 
 app.listen(PORT, () => {
   console.log('server is up and running');

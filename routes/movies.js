@@ -14,8 +14,8 @@ const idValidator = celebrate({
   }),
 });
 
-router.get('/', getMovies);
-router.post('/', celebrate({
+router.get('/movies/', getMovies);
+router.post('/movies/', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
@@ -30,6 +30,6 @@ router.post('/', celebrate({
     nameEN: Joi.string().required(),
   }),
 }), createMovie);
-router.delete('/:id', idValidator, deleteMovie);
+router.delete('/movies/:id', idValidator, deleteMovie);
 
 module.exports = router;
