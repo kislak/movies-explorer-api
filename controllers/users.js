@@ -26,7 +26,6 @@ const patchUser = (req, res, next) => {
     email,
   } = req.body;
 
-
   if (!name && !email) {
     return next(new BadRequest('Не переданы новое имя или почтовый ящик'));
   }

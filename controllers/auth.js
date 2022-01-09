@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const User = require('../models/user');
+
 const { JWT_SECRET = 'some-secret-key' } = process.env;
 const { UnauthorizedError } = require('../errors/unauthorized');
 const { ConflictError } = require('../errors/conflict');
