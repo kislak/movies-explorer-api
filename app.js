@@ -45,12 +45,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.get('/', (req, res) => res.send('Ответ на сигнал из далёкого космоса'));
+app.get('/', (req, res) => res.send({ message: 'Ответ на сигнал из далёкого космоса' }));
 app.use('/', authRouter);
 app.use(auth);
 app.use('/', usersRouter);
 app.use('/', moviesRouter);
-app.get('/secret', (req, res) => res.send('welcome to the club!'));
+app.get('/secret', (req, res) => res.send({ message: 'welcome to the club!' }));
 
 app.use(errorLogger);
 app.use(errors());
