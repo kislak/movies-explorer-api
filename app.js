@@ -3,7 +3,7 @@ require('dotenv').config();
 const {
   PORT = 3000,
   CORS_ORIGIN = '',
-  MONGO_URL = 'mongodb://localhost:27017/bitfilmsdb',
+  MONGO_URL = 'mongodb://localhost:27017/moviesdb',
   NODE_ENV = 'development',
 } = process.env;
 
