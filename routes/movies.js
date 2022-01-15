@@ -17,7 +17,7 @@ const idValidator = celebrate({
 router.get('/movies/', getMovies);
 router.post('/movies/', celebrate({
   body: Joi.object().keys({
-    country: Joi.string().required(),
+    country: Joi.string().required().messages({"any.required": "ошибка на русском"}),
     director: Joi.string().required(),
     duration: Joi.number().required(),
     year: Joi.string().required(),

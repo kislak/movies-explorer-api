@@ -127,3 +127,16 @@ sudo systemctl reload nginx
 sudo certbot renew --pre-hook "service nginx stop" --post-hook "service nginx start" 
 ```
 
+
+## jan 15:
+
+next() - continues flow
+return next() - through err (interrupt the flow)
+
+solid srp
+  корневой файл app.js - цепочка обработки запросов
+    extract router
+    extract validation 
+
+requestLogger
+limiter

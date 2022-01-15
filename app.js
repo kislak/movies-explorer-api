@@ -20,6 +20,7 @@ const moviesRouter = require('./routes/movies');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/error_handler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const {NotFoundError} = require("./errors/not_found");
 
 const app = express();
 
@@ -60,6 +61,11 @@ app.use((req, res) => {
   res.status(404).send({ message: 'запрошенный ресурс не найден' });
 });
 
+router.all("*", (req, res, next) => {
+  next(new NotFoundError('pageNotFound'))
+})
+
+
 app.listen(PORT, () => {
-  console.log('server is up and running');
+  console.log('server is up and running'); /* eslint-disable-line */
 });

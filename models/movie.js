@@ -4,7 +4,7 @@ const validator = require('validator');
 const cardSchema = new mongoose.Schema({
   country: {
     type: String,
-    required: true,
+    required: [ true, "поле country не задано" ]
   },
   director: {
     type: String,
