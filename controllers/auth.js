@@ -19,7 +19,11 @@ const createUser = (req, res, next) => {
       email,
       password: encryptedPassword,
     }))
-    .then(() => res.send({ message: 'Пользователь успешно зарегистрирован!' }))
+    .then((user) => {
+      const token = jwt.sign({_id: user._id}, JWT_SECRET);
+      res.cookie('jwt', token, {maxAge: 3600000 * 24 * 7, httpOnly: true})
+        .send({message: 'Вы успешно зарегистрировались!'})
+    })
     .catch((err) => {
       if (err.code === 11000) {
         return next(new ConflictError('Такой пользователь уже существует'));
