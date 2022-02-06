@@ -14,8 +14,8 @@ const idValidator = celebrate({
   }),
 });
 
-router.get('/movies/', getMovies);
-router.post('/movies/', celebrate({
+router.get('/movies', getMovies);
+router.post('/movies', celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
     director: Joi.string().required(),
