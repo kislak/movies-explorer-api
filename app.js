@@ -43,12 +43,12 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(requestLogger);
 
-app.get('/', (req, res) => res.send({ message: 'Ответ на сигнал из далёкого космоса' }));
-app.use('/', authRouter);
+app.get('/api/', (req, res) => res.send({ message: 'Ответ на сигнал из далёкого космоса' }));
+app.use('/api/', authRouter);
 app.use(auth);
-app.use('/', usersRouter);
-app.use('/', moviesRouter);
-app.get('/secret', (req, res) => res.send({ message: 'welcome to the club!' }));
+app.use('/api/', usersRouter);
+app.use('/api/', moviesRouter);
+app.get('/api/secret', (req, res) => res.send({ message: 'welcome to the club!' }));
 
 app.use((req, res) => {
   res.status(404).send({ message: 'запрошенный ресурс не найден' });
