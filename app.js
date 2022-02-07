@@ -28,6 +28,8 @@ mongoose.connect(MONGO_URL, { useNewUrlParser: true });
 const whitelist = CORS_ORIGIN.split(' ');
 const corsOptions = {
   origin(origin, callback) {
+    if(!origin) return callback(null, true);
+
     if (whitelist.indexOf(origin) !== -1) {
       callback(null, true);
     } else {
