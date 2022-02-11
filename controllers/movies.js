@@ -9,7 +9,7 @@ const sendMovie = (res, movie) => {
   throw new NotFoundError('Запрашиваемая каточка не найдена');
 };
 
-const getMovies = (req, res, next) => Movie.find({})
+const getMovies = (req, res, next) => Movie.find({owner: req.user._id})
   .then((movies) => res.send(movies))
   .catch(next);
 
